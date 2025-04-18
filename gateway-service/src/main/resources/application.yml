@@ -10,12 +10,12 @@ spring:
     gateway:
       # 라우팅 설정
       routes:
-        - id: test-service-a
+        - id: test-service
           # lb:// 는 유레카에 등록된 서비스 이름으로 로드밸런싱
-          uri: lb://test-service-a
+          uri: lb://test-service
           predicates:
             # /test-service-a/** 경로로 들어오는 요청을 test-service-a로 라우팅
-            - Path=/test-service-a/**
+            - Path=/test-service/**
 
 
 eureka:
