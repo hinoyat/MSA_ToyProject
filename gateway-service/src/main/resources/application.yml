@@ -34,6 +34,9 @@ eureka:
     prefer-ip-address: true
 
 # 모니터링을 위한 Actuator 설정
+# 기본 정보: http://localhost:8080/actuator
+# 헬스 체크: http://localhost:8080/actuator/health
+# 게이트웨이 라우팅 정보: http://localhost:8080/actuator/gateway/routes
 management:
   endpoints:
     web:
