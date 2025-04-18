@@ -1,0 +1,51 @@
+# 게이트웨이 서비스 기본 포트
+server:
+  port: 8080
+
+spring:
+  application:
+    # 유레카에 등록될 이름
+    name: gateway-service
+  cloud:
+    gateway:
+      # 라우팅 설정
+      routes:
+        - id: test-service-a
+          # lb:// 는 유레카에 등록된 서비스 이름으로 로드밸런싱
+          uri: lb://test-service-a
+          predicates:
+            # /test-service-a/** 경로로 들어오는 요청을 test-service-a로 라우팅
+            - Path=/test-service-a/**
+
+
+eureka:
+  client:
+    # 유레카 서버에 게이트웨이 등록
+    register-with-eureka: true
+    # 유레카 서버로부터 서비스 정보를 가져옴
+    fetch-registry: true
+    service-url:
+      # 유레카 서버 port
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    # 인스턴스 ID를 IP 주소와 포트로 구성
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+    # 자신의 IP 주소를 유레카 서버에 등록
+    prefer-ip-address: true
+
+# 모니터링을 위한 Actuator 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        # 모든 엔드포인트 노출
+        include: "*"
+  endpoint:
+    gateway:
+      # 게이트웨이 경로 정보 노출 활성화
+      enabled: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.netflix: INFO
