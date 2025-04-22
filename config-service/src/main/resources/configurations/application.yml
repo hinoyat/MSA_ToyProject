@@ -1,0 +1,9 @@
+eureka:
+  client:
+    # 유레카 서버에 게이트웨이 등록
+    register-with-eureka: true
+    # 유레카 서버로부터 서비스 정보를 가져옴
+    fetch-registry: true
+    service-url:
+      # 유레카 서버 port
+      defaultZone: http://localhost:8761/eureka/
